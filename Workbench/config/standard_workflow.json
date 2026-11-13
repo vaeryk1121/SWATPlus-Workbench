@@ -1,0 +1,26 @@
+{
+  "title": "新流域建模",
+  "runtime_config": "config/qgis344_runtime.json",
+  "build": {
+    "enabled": true,
+    "pipeline_config": "config/standard_pipeline.json",
+    "timeout_seconds": 1200
+  },
+  "model": {
+    "executable": "",
+    "expected_version": "62.0.1",
+    "outlet": "auto",
+    "timeout_seconds": 300
+  },
+  "frequency": "monthly",
+  "simulation": {
+    "start_year": 1990,
+    "end_year": 1997,
+    "warmup_years": 3
+  },
+  "periods": {},
+  "parameters": [],
+  "parameter_backend": "native_calibration",
+  "workflow_mode": "toolbox",
+  "observations": []
+}

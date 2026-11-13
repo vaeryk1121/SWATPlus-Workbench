@@ -1,0 +1,7 @@
+{
+  "version": "0.0.1-beta.1",
+  "presets": {
+    "新流域 · 自动建模与Toolbox": "standard_workflow.json",
+    "Robit教学示例 · 已有模型运行": "demo_existing_model.json"
+  }
+}

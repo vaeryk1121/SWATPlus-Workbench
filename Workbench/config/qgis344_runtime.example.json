@@ -1,0 +1,12 @@
+{
+  "qgis_root": "",
+  "plugin_root": "",
+  "support_root": "",
+  "editor_root": "",
+  "mpi_dir": "",
+  "qgis_version_prefix": "3.44.",
+  "plugin_version": "4.0.4",
+  "editor_version": "4.0.2",
+  "model_version": "62.0.1",
+  "toolbox_version": "4.0.1"
+}

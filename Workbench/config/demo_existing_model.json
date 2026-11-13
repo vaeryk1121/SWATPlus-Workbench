@@ -1,0 +1,25 @@
+{
+  "title": "Robit教学示例：1990—1991，预热1年",
+  "runtime_config": "config/qgis344_runtime.json",
+  "build": {
+    "enabled": false
+  },
+  "model": {
+    "executable": "",
+    "expected_version": "62.0.1",
+    "outlet": "auto",
+    "timeout_seconds": 300,
+    "input_dir": "models/examples/robit/TxtInOut"
+  },
+  "frequency": "monthly",
+  "simulation": {
+    "start_year": 1990,
+    "end_year": 1991,
+    "warmup_years": 1
+  },
+  "periods": {},
+  "parameters": [],
+  "parameter_backend": "native_calibration",
+  "workflow_mode": "toolbox",
+  "observations": []
+}

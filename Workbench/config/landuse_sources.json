@@ -1,0 +1,18 @@
+{
+  "cas_clud_nxh_verified_crosswalk": {
+    "product": "本地中科院土地利用编码图；来源年代待核实",
+    "year": "unknown",
+    "mapping_note": "本地南小河沟已有分类对照：12耕地→AGRL；21/22/23/24林地→FRST；32草地→PAST；43水域→WATR；51/52建设用地→URBN。仅作为明确的来源适配，不表示历史作物/林型/管理已还原；46等未核实编码仍拒收。水域可能被QSWAT+转为湿地WETW。",
+    "mapping": {
+      "12": "AGRL",
+      "21": "FRST",
+      "22": "FRST",
+      "23": "FRST",
+      "24": "FRST",
+      "32": "PAST",
+      "43": "WATR",
+      "51": "URBN",
+      "52": "URBN"
+    }
+  }
+}

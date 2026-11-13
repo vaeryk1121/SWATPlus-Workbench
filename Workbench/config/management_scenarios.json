@@ -1,0 +1,40 @@
+{
+  "teaching_example": true,
+  "note": "教学情景表：基础项目为robit_res01（含教学水库res01、vol_ps=11.5ha-m）。三个情景从同一未修改基础库独立复制生成，互不叠加。",
+  "scenarios": [
+    {
+      "scenario": "rule_drawdown",
+      "base_project": "models/teaching/robit_res01/res01.sqlite",
+      "mode": "replace",
+      "kind": "reservoir_release_rule",
+      "rule_name": "drawdown_days",
+      "reservoir_name": "res01"
+    },
+    {
+      "scenario": "irr_5mm",
+      "base_project": "models/teaching/robit_res01/res01.sqlite",
+      "mode": "replace",
+      "kind": "constrained_irrigation",
+      "landuse": "agrl_lum",
+      "amount_mm": 5.0,
+      "source_type": "res",
+      "source_obj_id": 1,
+      "application_name": "sprinkler_med",
+      "stress_threshold": 0.55,
+      "max_per_year": 20
+    },
+    {
+      "scenario": "irr_10mm",
+      "base_project": "models/teaching/robit_res01/res01.sqlite",
+      "mode": "replace",
+      "kind": "constrained_irrigation",
+      "landuse": "agrl_lum",
+      "amount_mm": 10.0,
+      "source_type": "res",
+      "source_obj_id": 1,
+      "application_name": "sprinkler_med",
+      "stress_threshold": 0.55,
+      "max_per_year": 20
+    }
+  ]
+}

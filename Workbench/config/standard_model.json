@@ -1,0 +1,10 @@
+{
+  "runtime_config": "config/qgis344_runtime.json",
+  "input_dir": "models/examples/robit344_check_b1/Scenarios/Default/TxtInOut",
+  "run_dir": "runs/robit344_check_b1_run",
+  "start_year": 1990,
+  "end_year": 1997,
+  "warmup_years": 3,
+  "outlet": "auto",
+  "timeout_seconds": 600
+}

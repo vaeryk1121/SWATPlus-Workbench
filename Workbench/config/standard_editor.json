@@ -1,0 +1,32 @@
+{
+  "runtime_config": "config/qgis344_runtime.json",
+  "project_name": "robit344_check_b1",
+  "project_db": "models/examples/robit344_check_b1/robit344_check_b1.sqlite",
+  "datasets_db": "models/examples/robit344_check_b1/swatplus_datasets.sqlite",
+  "output_dir": "models/examples/robit344_check_b1/Scenarios/Default/TxtInOut",
+  "weather_output_dir": "data/processed/robit344_check_b1/weather",
+  "log_dir": "runs/robit344_check_b1_editor",
+  "temp_dir": "runs/robit344_check_b1_editor/temp",
+  "timeout_seconds": 600,
+  "weather": {
+    "format": "plus",
+    "source_dir": "",
+    "wgn_method": "two_file",
+    "wgn_station_csv": "",
+    "wgn_monthly_csv": "",
+    "wgn_database": "",
+    "wgn_table": "",
+    "allow_generated": false
+  },
+  "simulation": {
+    "start_year": 1990,
+    "end_year": 1997,
+    "warmup_years": 3,
+    "print_objects": [
+      "basin_wb",
+      "basin_aqu",
+      "basin_res",
+      "channel_sd"
+    ]
+  }
+}

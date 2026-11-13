@@ -1,0 +1,9 @@
+{
+  "backend": "qgis344",
+  "runtime_config": "config/qgis344_runtime.json",
+  "preflight": true,
+  "stage_timeout_seconds": 600,
+  "spatial_config": "config/standard_spatial.json",
+  "editor_config": "config/standard_editor.json",
+  "model_config": "config/standard_model.json"
+}

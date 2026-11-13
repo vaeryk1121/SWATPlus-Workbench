@@ -1,0 +1,10 @@
+numpy==1.26.4
+scipy==1.13.1
+spotpy==1.6.2
+SALib==1.4.7
+multiprocess==0.70.16
+dill==0.3.8
+matplotlib==3.9.4
+pandas==2.3.3
+pillow==11.3.0
+packaging==26.3

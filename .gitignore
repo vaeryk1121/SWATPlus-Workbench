@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+runtime/
+dist/
+*.exe
+*.zip
+Workbench/config/qgis344_runtime.json
+Workbench/config/*.tmp
+Workbench/runs/
+Workbench/cases/
+Workbench/data/
+*.log

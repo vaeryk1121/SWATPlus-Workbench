@@ -1,0 +1,2214 @@
+{
+  "schema_version": 1,
+  "title": "SWAT+原生水文参数目录",
+  "supported_versions": [
+    "60.5.7",
+    "61.0.1",
+    "62.0.1"
+  ],
+  "interpretation": "model_absolute_bounds从现有对应版本模型cal_parms.cal读取，运行时重新读取用户模型字典；不是SWAT-CUP统一标准率定范围。suggested_search为项目探索建议，不代表官方建议或水文合理性已验证。 各参数实际支持的版本以其model_absolute_bounds键为准；新增项不自动适用于旧版。",
+  "input_sources": {
+    "60.5.7": "runs/robit_research_v1/model_inputs/cal_parms.cal",
+    "61.0.1": "models/examples/oulanka_pyswatplus/original/TxtInOut/cal_parms.cal",
+    "62.0.1": "models/examples/robit344_check_b1/Scenarios/Default/TxtInOut/cal_parms.cal"
+  },
+  "input_source_history": {
+    "62.0.1": [
+      {
+        "path": "models/examples/robit_qgis344_win/Scenarios/Default/TxtInOut/cal_parms.cal",
+        "role": "Original model dictionary used in the 62.0.1 adapter verification.",
+        "retained_reference": "models/examples/robit344_check_b1/Scenarios/Default/TxtInOut/cal_parms.cal",
+        "consolidation_note": "On 2026-10-21 all 221 parsed dictionary entries were compared and found identical. Current input_sources now points to the retained project. Original trial evidence and its recorded paths have not been rewritten."
+      }
+    ]
+  },
+  "parameters": [
+    {
+      "native_name": "cn2",
+      "label": "SCS曲线数",
+      "process": "地表径流",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          35.0,
+          95.0
+        ],
+        "61.0.1": [
+          35.0,
+          95.0
+        ],
+        "62.0.1": [
+          35.0,
+          95.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "pctchg",
+        "lower": -20,
+        "upper": 20,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "保留各HRU初始差异；10表示增加10%，不是SWAT-CUP的0.1相对系数。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.11999999999999988
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.10645,
+            "outlet_changed_at_output_precision": true
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 71,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "cn3_swf",
+      "label": "湿润条件曲线数土壤水因子",
+      "process": "地表径流",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.1,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "有暗管排水的HRU在此版本会跳过修改，因此适配器明确拒绝。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 80,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "esco",
+      "label": "土壤蒸发补偿因子",
+      "process": "蒸散发",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.5,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.028000000000000025,
+            "outlet_changed_at_output_precision": true
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 133,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "epco",
+      "label": "植物蒸腾补偿因子",
+      "process": "蒸散发",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.1,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.4830000000000001
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.3919999999999999,
+            "outlet_changed_at_output_precision": true
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 137,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "perco",
+      "label": "土壤渗漏系数",
+      "process": "渗漏",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "fraction",
+        "61.0.1": "fraction",
+        "62.0.1": "fraction"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.01,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "禁止(1e-9,1e-6]的本地变换奇异区间；不支持暗管排水HRU。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.06899999999999995,
+            "outlet_changed_at_output_precision": true
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 157,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "latq_co",
+      "label": "壤中流系数",
+      "process": "壤中流",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.01,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.17100000000000026
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 125,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "lat_ttime",
+      "label": "壤中流滞后时间",
+      "process": "壤中流",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.5,
+          180.0
+        ],
+        "61.0.1": [
+          0.5,
+          180.0
+        ],
+        "62.0.1": [
+          0.5,
+          180.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "days",
+        "61.0.1": "days",
+        "62.0.1": "days"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.5,
+        "upper": 60,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "初始化已变换内部时间变量，只开放绝对值避免相对变化语义错误。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 112,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "canmx",
+      "label": "最大冠层截留",
+      "process": "蒸散发",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          100.0
+        ],
+        "61.0.1": [
+          0.0,
+          100.0
+        ],
+        "62.0.1": [
+          0.0,
+          100.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm/H20",
+        "61.0.1": "mm/H20",
+        "62.0.1": "mm/H20"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0,
+        "upper": 10,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "应按林地/耕地分组设置，统一值仅用于探索。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 129,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "petco",
+      "label": "潜在蒸散系数",
+      "process": "蒸散发",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.7,
+          1.3
+        ],
+        "61.0.1": [
+          0.8,
+          1.2
+        ],
+        "62.0.1": [
+          0.8,
+          1.2
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "fraction",
+        "61.0.1": "fraction",
+        "62.0.1": "fraction"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.8,
+        "upper": 1.2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "rev60.5.7字典允许0.7-1.3；rev61.0.1为0.8-1.2，以模型字典为准。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/hyd/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 171,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "awc",
+      "label": "土壤有效持水量",
+      "process": "土壤",
+      "object_type": "sol",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.01,
+          1.0
+        ],
+        "61.0.1": [
+          0.01,
+          1.0
+        ],
+        "62.0.1": [
+          0.01,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm_H20/mm",
+        "61.0.1": "mm_H20/mm",
+        "62.0.1": "mm_H20/mm"
+      },
+      "suggested_search": {
+        "method": "pctchg",
+        "lower": -20,
+        "upper": 20,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "object_ids是HRU编号，layer可指定土层；不是土壤数据库编号。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sol/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.015000000000000124
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.006000000000000005,
+            "outlet_changed_at_output_precision": true
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 283,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "k",
+      "label": "饱和导水率",
+      "process": "土壤",
+      "object_type": "sol",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0001,
+          2000.0
+        ],
+        "61.0.1": [
+          0.0001,
+          2000.0
+        ],
+        "62.0.1": [
+          0.0001,
+          2000.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm/hr",
+        "61.0.1": "mm/hr",
+        "62.0.1": "mm/hr"
+      },
+      "suggested_search": {
+        "method": "pctchg",
+        "lower": -50,
+        "upper": 50,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "按土壤调查约束；不同层和土类保留空间差异。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sol/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.015000000000000124
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 289,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "surlag",
+      "label": "地表径流滞后系数",
+      "process": "汇流",
+      "object_type": "bsn",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.05,
+          24.0
+        ],
+        "61.0.1": [
+          0.05,
+          24.0
+        ],
+        "62.0.1": [
+          0.05,
+          24.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "days",
+        "61.0.1": "days",
+        "62.0.1": "days"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.5,
+        "upper": 12,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "在这两个版本的字典中属于bsn，全流域仅一个值。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/parameters-bsn/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.0040000000000000036
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 376,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "alpha",
+      "label": "基流衰减常数",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "days",
+        "61.0.1": "days",
+        "62.0.1": "days"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.01,
+        "upper": 0.5,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "alpha_bf输入列；cal_parms字典标签写days，但官方aquifer说明和本地aquifer_module.f90定义物理量为1/day。两者在目录中分别记录，避免单位混淆。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": false,
+            "max_flow_difference_m3_s": 0.0
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 962,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      },
+      "physical_unit": "1/day"
+    },
+    {
+      "native_name": "bf_max",
+      "label": "最大基流系数",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.1,
+          2.0
+        ],
+        "61.0.1": [
+          0.1,
+          2.0
+        ],
+        "62.0.1": [
+          0.1,
+          2.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm",
+        "61.0.1": "mm",
+        "62.0.1": "mm"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.1,
+        "upper": 2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 958,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "deep_seep",
+      "label": "深层渗漏比例",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.001,
+          0.4
+        ],
+        "61.0.1": [
+          0.001,
+          0.4
+        ],
+        "62.0.1": [
+          0.001,
+          0.4
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "m/m",
+        "61.0.1": "m/m",
+        "62.0.1": "m/m"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.001,
+        "upper": 0.2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 971,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "sp_yld",
+      "label": "给水度",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          0.5
+        ],
+        "61.0.1": [
+          0.0,
+          0.5
+        ],
+        "62.0.1": [
+          0.0001,
+          0.5
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "fraction",
+        "61.0.1": "fraction",
+        "62.0.1": "fraction"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.02,
+        "upper": 0.3,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "需有含水层依据；变化会影响初始化蓄水量。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 975,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "flo_min",
+      "label": "产生基流的水位深度阈值",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          50.0
+        ],
+        "61.0.1": [
+          0.0,
+          50.0
+        ],
+        "62.0.1": [
+          0.0,
+          50.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "m",
+        "61.0.1": "m",
+        "62.0.1": "m"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0,
+        "upper": 10,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "SWAT+字典单位是m；不是经典SWAT的GWQMN毫米阈值。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 986,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "revap_co",
+      "label": "地下水再蒸发系数",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.02,
+          0.2
+        ],
+        "61.0.1": [
+          0.02,
+          0.2
+        ],
+        "62.0.1": [
+          0.02,
+          0.2
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.02,
+        "upper": 0.2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 967,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "revap_min",
+      "label": "允许再蒸发的水位深度阈值",
+      "process": "地下水",
+      "object_type": "aqu",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          50.0
+        ],
+        "61.0.1": [
+          0.0,
+          50.0
+        ],
+        "62.0.1": [
+          0.0,
+          50.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "m",
+        "61.0.1": "m",
+        "62.0.1": "m"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0,
+        "upper": 10,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "单位m；不能照搬经典SWAT REVAPMN毫米范围。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/aqu/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 990,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "chn",
+      "label": "河道曼宁糙率",
+      "process": "河道",
+      "object_type": "rte",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          -0.01,
+          0.3
+        ],
+        "61.0.1": [
+          -0.01,
+          0.3
+        ],
+        "62.0.1": [
+          0.001,
+          0.3
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "null",
+        "61.0.1": "null",
+        "62.0.1": "null"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.02,
+        "upper": 0.15,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "针对chandeg连接的简化河道，object_ids不是gis_id。 当前62.0.1原生分支只更新chn字段，未同步重建初始化的水位流量曲线和Muskingum系数；保留既有配置兼容性，但不等同于完整重设河道糙率。已有短期试验未发现出口响应，正式选用前需专项验证。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sd-channel/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "60.5.7",
+            "example": "robit",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.005290000000000003
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_flow_difference_m3_s": 0.0,
+            "outlet_changed_at_output_precision": false
+          }
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 698,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "chk",
+      "label": "河床有效导水率",
+      "process": "河道",
+      "object_type": "rte",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          -0.01,
+          500.0
+        ],
+        "61.0.1": [
+          -0.01,
+          500.0
+        ],
+        "62.0.1": [
+          1e-05,
+          500.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm/hr",
+        "61.0.1": "mm/hr",
+        "62.0.1": "mm/hr"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 1e-05,
+        "upper": 50,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "仅用于当前简化河道参数类型rte。 SWAT+ 62.0.1模型字典下限为0.00001，共用探索建议按这一正下限设置；旧版本仍按各自模型字典校验。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sd-channel/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 702,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "snofall_tmp",
+      "label": "降雪温度阈值",
+      "process": "积雪融雪",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          -5.0,
+          5.0
+        ],
+        "61.0.1": [
+          -5.0,
+          5.0
+        ],
+        "62.0.1": [
+          -5.0,
+          5.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "degrees",
+        "61.0.1": "degrees",
+        "62.0.1": "degrees"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": -2,
+        "upper": 2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sno/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "61.0.1",
+            "example": "oulanka",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 0.1679999999999997
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 195,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "snomelt_tmp",
+      "label": "融雪温度阈值",
+      "process": "积雪融雪",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          -5.0,
+          5.0
+        ],
+        "61.0.1": [
+          -5.0,
+          5.0
+        ],
+        "62.0.1": [
+          -5.0,
+          5.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "degrees",
+        "61.0.1": "degrees",
+        "62.0.1": "degrees"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": -2,
+        "upper": 2,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sno/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 199,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "snomelt_max",
+      "label": "夏至融雪因子",
+      "process": "积雪融雪",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          10.0
+        ],
+        "61.0.1": [
+          0.0,
+          10.0
+        ],
+        "62.0.1": [
+          0.0,
+          10.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm/deg/c/day",
+        "61.0.1": "mm/deg/c/day",
+        "62.0.1": "mm/deg/c/day"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 1,
+        "upper": 8,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "季节端点因子，应结合纬度、融雪观测联合设置。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sno/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [
+          {
+            "version": "61.0.1",
+            "example": "oulanka",
+            "outlet_changed_at_output_precision": true,
+            "max_flow_difference_m3_s": 1.5639999999999992
+          }
+        ],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 203,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "snomelt_min",
+      "label": "冬至融雪因子",
+      "process": "积雪融雪",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          10.0
+        ],
+        "61.0.1": [
+          0.0,
+          10.0
+        ],
+        "62.0.1": [
+          0.0,
+          10.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "mm/deg/c/day",
+        "61.0.1": "mm/deg/c/day",
+        "62.0.1": "mm/deg/c/day"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.5,
+        "upper": 5,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "无积雪流域通常不必加入搜索。",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sno/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 207,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "snomelt_lag",
+      "label": "积雪温度滞后系数",
+      "process": "积雪融雪",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "60.5.7": [
+          0.0,
+          1.0
+        ],
+        "61.0.1": [
+          0.0,
+          1.0
+        ],
+        "62.0.1": [
+          0.0,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "60.5.7": "none",
+        "61.0.1": "none",
+        "62.0.1": "none"
+      },
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.01,
+        "upper": 1,
+        "basis": "探索性起始范围，非官方通用推荐；需按流域资料、初值与敏感性调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "",
+      "sources": [
+        "https://docs.swat.tamu.edu/calibration/parameter-change-files/",
+        "https://github.com/swat-model/swatplus/blob/main/src/cal_parm_select.f90",
+        "https://docs.swat.tamu.edu/input-reference/sno/"
+      ],
+      "local_source_review": "swatplus/src/cal_parm_select.f90; cal_parmchg_read.f90; cal_conditions.f90; chg_par.f90",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "combined_binary_smoke_versions": [
+          "60.5.7",
+          "61.0.1"
+        ],
+        "single_parameter_binary_smoke": [],
+        "evidence_file": "runs/native_parameter_expansion_20261020/summary.json",
+        "limits": "组合试验成功不证明每项参数均有效；各参数是否敏感取决于流域、时间尺度及过程是否激活；没有修改编译程序输出内部参数。",
+        "version_62_0_1": {
+          "model_dictionary_checked": true,
+          "source_case_reviewed": true,
+          "source_url": "https://github.com/swat-model/swatplus/blob/62.0.1/src/cal_parm_select.f90",
+          "binary_smoke_completed": true,
+          "limits": "Combined execution does not establish each parameter response. CHN had no outlet change at the written precision in this case; unsupported process activation or low sensitivity must not be mistaken for an integration failure. Post-change internal parameter values are not dumped.",
+          "binary_smoke_scope": "26 parameters together; 1990-1991 with one warmup year",
+          "evidence_file": "runs/native62_backend_20261021/summary.json"
+        },
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 211,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "dictionary name/object/bounds and source selection branch; not proof of individual sensitivity"
+        }
+      }
+    },
+    {
+      "native_name": "lat_len",
+      "label": "壤中流坡长",
+      "process": "壤中流",
+      "object_type": "hru",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "62.0.1": [
+          1.0,
+          150.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "62.0.1": "m"
+      },
+      "physical_units": "m",
+      "suggested_search": {
+        "method": "pctchg",
+        "lower": -20,
+        "upper": 20,
+        "basis": "本轮探索起始范围，非官方通用推荐；需结合流域资料、初值和过程激活情况调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "每日侧向流使用该坡长；不重新推导已初始化的壤中流滞后系数，需与lat_ttime分别解释。",
+      "sources": [
+        "https://github.com/swat-model/swatplus/blob/6f515368525e7d84089ae0f9d33f4c9115de5679/src/cal_parm_select.f90"
+      ],
+      "local_source_review": "swatplus/src; cal_parm_select.f90; swr_percmicro.f90:69; hydro_init.f90:130-145",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 121,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "cal_parm_select.f90; swr_percmicro.f90:69; hydro_init.f90:130-145"
+        },
+        "limits": "本次仅接入并核查62.0.1；未宣称旧版本适配或所有流域响应。内部改后值未由此程序直接输出。",
+        "version_62_0_1": {
+          "binary_smoke_completed": true,
+          "evidence_file": "runs/parameter_review_20261022/summary.json",
+          "binary_smoke_scope": "single parameter and all 30 combined; 1990-1991 with one warmup year; 12 monthly outputs",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_outlet_flow_difference_m3_s": 0.002000000000000224,
+            "all_channel_maximum_differences": {
+              "flo_out": 0.002000000000000224,
+              "evap": 0.0
+            },
+            "basin_maximum_differences_mm": {
+              "et": 0.0470000000000006,
+              "latq": 0.099,
+              "perc": 0.0010000000000000009,
+              "wateryld": 0.25900000000001455
+            }
+          },
+          "post_change_internal_values_dumped": false,
+          "limits": "Output response in this test case, not universal sensitivity, calibration skill, or proof that all 30 combined parameters have individual responses."
+        }
+      }
+    },
+    {
+      "native_name": "bd",
+      "label": "土壤容重",
+      "process": "土壤水分",
+      "object_type": "sol",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "62.0.1": [
+          0.9,
+          2.5
+        ]
+      },
+      "units_in_model_dictionary": {
+        "62.0.1": "mg/m**3"
+      },
+      "physical_units": "Mg/m³（等价于g/cm³）",
+      "suggested_search": {
+        "method": "pctchg",
+        "lower": -10,
+        "upper": 10,
+        "basis": "本轮探索起始范围，非官方通用推荐；需结合流域资料、初值和过程激活情况调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "逐HRU/土层修改，模型重算持水和孔隙参数；应受土壤实测资料约束。字典mg/m**3大小写有歧义，源码物理单位为Mg/m³。",
+      "sources": [
+        "https://github.com/swat-model/swatplus/blob/6f515368525e7d84089ae0f9d33f4c9115de5679/src/cal_parm_select.f90"
+      ],
+      "local_source_review": "swatplus/src; cal_parm_select.f90:277-281; soil_awc_init.f90; soil_module.f90:37",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 277,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "cal_parm_select.f90:277-281; soil_awc_init.f90; soil_module.f90:37"
+        },
+        "limits": "本次仅接入并核查62.0.1；未宣称旧版本适配或所有流域响应。内部改后值未由此程序直接输出。",
+        "version_62_0_1": {
+          "binary_smoke_completed": true,
+          "evidence_file": "runs/parameter_review_20261022/summary.json",
+          "binary_smoke_scope": "single parameter and all 30 combined; 1990-1991 with one warmup year; 12 monthly outputs",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_outlet_flow_difference_m3_s": 0.2719999999999998,
+            "all_channel_maximum_differences": {
+              "flo_out": 0.2719999999999998,
+              "evap": 5.198999999999999
+            },
+            "basin_maximum_differences_mm": {
+              "et": 25.828000000000003,
+              "latq": 0.028000000000000004,
+              "perc": 0.307,
+              "wateryld": 43.49400000000003
+            }
+          },
+          "post_change_internal_values_dumped": false,
+          "limits": "Output response in this test case, not universal sensitivity, calibration skill, or proof that all 30 combined parameters have individual responses."
+        }
+      }
+    },
+    {
+      "native_name": "alb",
+      "label": "表层湿土反照率",
+      "process": "蒸散发",
+      "object_type": "sol",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "62.0.1": [
+          0.0,
+          0.25
+        ]
+      },
+      "units_in_model_dictionary": {
+        "62.0.1": "null"
+      },
+      "physical_units": "无量纲",
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.1,
+        "upper": 0.25,
+        "basis": "本轮探索起始范围，非官方通用推荐；需结合流域资料、初值和过程激活情况调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "日反照率仅读取第1层。适配器默认并限制为第1层；响应还受积雪、植被和PET方法影响。",
+      "sources": [
+        "https://github.com/swat-model/swatplus/blob/6f515368525e7d84089ae0f9d33f4c9115de5679/src/cal_parm_select.f90"
+      ],
+      "local_source_review": "swatplus/src; cal_parm_select.f90:325-327; albedo.f90:27-30; et_pot.f90:160",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 325,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "cal_parm_select.f90:325-327; albedo.f90:27-30; et_pot.f90:160"
+        },
+        "limits": "本次仅接入并核查62.0.1；未宣称旧版本适配或所有流域响应。内部改后值未由此程序直接输出。",
+        "version_62_0_1": {
+          "binary_smoke_completed": true,
+          "evidence_file": "runs/parameter_review_20261022/summary.json",
+          "binary_smoke_scope": "single parameter and all 30 combined; 1990-1991 with one warmup year; 12 monthly outputs",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_outlet_flow_difference_m3_s": 9.999999999998899e-05,
+            "all_channel_maximum_differences": {
+              "flo_out": 9.999999999998899e-05,
+              "evap": 0.0
+            },
+            "basin_maximum_differences_mm": {
+              "et": 0.015000000000000568,
+              "latq": 0.0,
+              "perc": 0.0,
+              "wateryld": 0.018000000000029104
+            }
+          },
+          "post_change_internal_values_dumped": false,
+          "limits": "Output response in this test case, not universal sensitivity, calibration skill, or proof that all 30 combined parameters have individual responses."
+        }
+      },
+      "default_layer": [
+        1,
+        1
+      ],
+      "allowed_layers": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "native_name": "evrch",
+      "label": "河道蒸发调整系数",
+      "process": "河道水量",
+      "object_type": "bsn",
+      "allowed_methods": [
+        "absval",
+        "abschg",
+        "pctchg"
+      ],
+      "model_absolute_bounds": {
+        "62.0.1": [
+          0.5,
+          1.0
+        ]
+      },
+      "units_in_model_dictionary": {
+        "62.0.1": "null"
+      },
+      "physical_units": "无量纲",
+      "suggested_search": {
+        "method": "absval",
+        "lower": 0.5,
+        "upper": 1.0,
+        "basis": "本轮探索起始范围，非官方通用推荐；需结合流域资料、初值和过程激活情况调整"
+      },
+      "relative_change_convention": "pctchg: new = old * (1 + value / 100); abschg: new = old + value; model absolute bounds clip results",
+      "note": "流域级参数；仅在河道有存水和蒸发需求时影响计算。出口流量不变不等于参数写入失败。",
+      "sources": [
+        "https://github.com/swat-model/swatplus/blob/6f515368525e7d84089ae0f9d33f4c9115de5679/src/cal_parm_select.f90"
+      ],
+      "local_source_review": "swatplus/src; cal_parm_select.f90:391-393; ch_rtmusk.f90:220",
+      "verification": {
+        "model_dictionary_checked": true,
+        "source_cases_reviewed": true,
+        "current_source_review_62_0_1": {
+          "source_file": "../Engine/swatplus/src/cal_parm_select.f90",
+          "case_line": 391,
+          "source_revision": "6f515368525e7d84089ae0f9d33f4c9115de5679",
+          "scope": "cal_parm_select.f90:391-393; ch_rtmusk.f90:220"
+        },
+        "limits": "本次仅接入并核查62.0.1；未宣称旧版本适配或所有流域响应。内部改后值未由此程序直接输出。",
+        "version_62_0_1": {
+          "binary_smoke_completed": true,
+          "evidence_file": "runs/parameter_review_20261022/summary.json",
+          "binary_smoke_scope": "single parameter and all 30 combined; 1990-1991 with one warmup year; 12 monthly outputs",
+          "single_parameter_binary_smoke": {
+            "records": 12,
+            "max_outlet_flow_difference_m3_s": 0.0,
+            "all_channel_maximum_differences": {
+              "flo_out": 1.0000000000003062e-05,
+              "evap": 14.629999999999999
+            },
+            "basin_maximum_differences_mm": {
+              "et": 0.0,
+              "latq": 0.0,
+              "perc": 0.0,
+              "wateryld": 0.0
+            }
+          },
+          "post_change_internal_values_dumped": false,
+          "limits": "Output response in this test case, not universal sensitivity, calibration skill, or proof that all 30 combined parameters have individual responses."
+        }
+      }
+    }
+  ]
+}

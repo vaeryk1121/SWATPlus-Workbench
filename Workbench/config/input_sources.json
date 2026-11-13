@@ -1,0 +1,32 @@
+{
+  "hwsd2": {
+    "database": "",
+    "raster": "",
+    "source_url": "https://www.fao.org/land-water/resources/tools/databases/hwsd/en/",
+    "carbon_unit": "% weight",
+    "unit_basis": "2026-10-24取得FAO当前发布MDB，ORG_CARBON字典与本地一致为% weight；不照报告冲突的g/kg文本改数值"
+  },
+  "official_soil": {
+    "database": "",
+    "raster": "data/raw/shared/official_soil/ea_soil.vrt",
+    "source_url": "https://swat.tamu.edu/media/116408/ea_soil.zip",
+    "note": "SWAT官方旧全球配套图，约0.0675度，空间分辨率粗，仅适合明确接受该数据源的场景；不与HWSD2编号混接"
+  },
+  "official_landuse": {
+    "database": "",
+    "raster": "data/raw/shared/official_landuse/ea_landuse.vrt",
+    "source_url": "https://swat.tamu.edu/media/116401/ea_landuse_newres.zip",
+    "note": "官方GLCC旧全球土地利用及global_landuses配套表；时期/粗分辨率不代表当前实地管理"
+  },
+  "global_wgn": {
+    "database": "data/raw/shared/wgn/swatplus_wgn.sqlite",
+    "table": "wgn_cfsr_world",
+    "source_url": "https://plus.swat.tamu.edu/downloads/swatplus_wgn.zip",
+    "source_note": "SWAT官方全球WGN，177575个CFSR站点；气候统计/派生参数，不是当地实测天气；2026-10-24核查"
+  },
+  "cma_daily_v3": {
+    "format_url": "https://image.data.cma.cn/static/doc/A/SURF_CLI_CHN_MUL_DAY_V3.0/SURF_CLI_CHN_MUL_DAY_FORMAT.doc",
+    "description_url": "https://image.data.cma.cn/static/doc/A/SURF_CLI_CHN_MUL_DAY_V3.0/SURF_CLI_CHN_MUL_DAY_DOCU_C.doc",
+    "day_boundary": "北京时20时日界，保留源日期标签"
+  }
+}
